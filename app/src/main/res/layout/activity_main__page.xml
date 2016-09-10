@@ -10,10 +10,27 @@
     tools:context="app_yams.yamsscore.Main_Page">
 
 
-    <ImageView
+    <FrameLayout
+        android:layout_width="700dp"
+        android:layout_height="700dp"
+        android:background="@drawable/fond_yams"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:measureAllChildren="true"
+        android:touchscreenBlocksFocus="false"
+        android:layout_alignParentEnd="false"
+        android:layout_centerInParent="true"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:id="@+id/grille">
+
+    </FrameLayout>
+
+    <ZoomControls android:id="@+id/zoomcontrols"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView" />
-
+        android:layout_gravity="left|top"
+        android:layout_alignBottom="@+id/grille"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
