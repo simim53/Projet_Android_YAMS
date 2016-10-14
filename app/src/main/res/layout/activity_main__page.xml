@@ -21,7 +21,6 @@
         android:id="@+id/grille"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
-
     </FrameLayout>
 
 </RelativeLayout>
