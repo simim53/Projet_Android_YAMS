@@ -110,6 +110,7 @@ public class Main_Page extends AppCompatActivity {
                 return false;
         }
 
+
         return true;
     }
 
