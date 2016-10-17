@@ -36,7 +36,7 @@ public class Main_Page extends AppCompatActivity {
 
 
         // condition valide si 1er lancement
-        if (savedInstanceState == null) {
+      //  if (savedInstanceState == null) {
 
             // effet de zoom au lancement uniquement
             final FrameLayout zoom = (FrameLayout) findViewById(R.id.Layout_Principal);
@@ -45,7 +45,7 @@ public class Main_Page extends AppCompatActivity {
 
 
 
-        }
+      //  }
 
 
         ImageGrille = (ImageView) findViewById(R.id.imageView);
@@ -58,8 +58,8 @@ public class Main_Page extends AppCompatActivity {
 
 
 
-        //colonne1 = new Create_colonne();
-        //colonne1.creation(10,10,Layout_Principal);
+        colonne1 = new Create_colonne();
+        colonne1.creation(10,10,Layout_Principal);
 
 
 

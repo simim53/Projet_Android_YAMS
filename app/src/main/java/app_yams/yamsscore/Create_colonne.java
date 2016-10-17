@@ -15,7 +15,9 @@ public class Create_colonne {
 
         CheckBox checkBox1 = new CheckBox(Layout.getContext());
 
+
         Layout.addView(checkBox1);
+
 
 
 
