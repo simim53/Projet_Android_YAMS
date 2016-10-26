@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 
 
 public class Main_Page extends AppCompatActivity {
@@ -22,6 +22,9 @@ public class Main_Page extends AppCompatActivity {
     public Create_colonne colonne1;
     private float dX;
     private float dY;
+
+    boolean isthefirstpointer = false;
+
 
 
     @Override
@@ -59,8 +62,7 @@ public class Main_Page extends AppCompatActivity {
 
 
         colonne1 = new Create_colonne();
-        colonne1.creation(10,10,Layout_Principal);
-
+        colonne1.creation(10,10,Layout_Principal,getApplicationContext());
 
 
 
@@ -82,37 +84,68 @@ public class Main_Page extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-
-    // event touche écran
-    public boolean onTouchEvent(MotionEvent ev) {
-
-        SGD.onTouchEvent(ev);
-
-        final int action = ev.getAction();
-        switch (action & MotionEvent.ACTION_MASK) {
-
-            case MotionEvent.ACTION_DOWN:
-
-                dX = Layout_Principal.getX() - ev.getRawX();
-                dY = Layout_Principal.getY() - ev.getRawY();
-
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-
-                Layout_Principal.animate()
-                        .x(ev.getRawX() + dX)
-                        .y(ev.getRawY() + dY)
-                        .setDuration(0)
-                        .start();
-                break;
-            default:
-                return false;
-        }
-
-
+    public boolean onTouchEvent(MotionEvent event) {
+        onTouch(Layout_Principal,event);
         return true;
     }
+    // event touche écran
+    public boolean onTouch(View v, MotionEvent event) {
+
+
+          SGD.onTouchEvent(event);
+
+
+            if(event.getPointerCount() >= 2)
+            {
+                isthefirstpointer = false;
+            }
+
+
+
+
+
+
+        switch (v.getId()) {
+                case R.id.Layout_Principal:
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                            dX = Layout_Principal.getX() - event.getX(0);
+                            dY = Layout_Principal.getY() - event.getY(0);
+
+
+                        return true;
+                    } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+
+                        if(isthefirstpointer == true) {
+
+
+
+
+
+                            Layout_Principal.animate()
+                                    .x(event.getX(0) + dX)
+                                    .y(event.getY(0) + dY)
+                                    .setDuration(0)
+                                    .start();
+
+                        }
+                        return true;
+                    } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+
+                      isthefirstpointer = true;
+                        return true;
+                    }
+                    return true;
+            }
+            return true;
+
+
+
+
+
+    }
+
+
 
 
 
@@ -121,11 +154,12 @@ public class Main_Page extends AppCompatActivity {
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            scale *= detector.getScaleFactor();
-            scale = Math.max(0.1f, Math.min(scale, 5.0f));
+            scale *= detector.getScaleFactor() ;
+            scale = Math.max(0.95f, Math.min(scale, 5.0f));
 
             Layout_Principal.setScaleX(scale);
             Layout_Principal.setScaleY(scale);
+
             return true;
         }
     }
