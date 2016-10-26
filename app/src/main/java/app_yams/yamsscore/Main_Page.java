@@ -104,7 +104,6 @@ public class Main_Page extends AppCompatActivity {
 
 
 
-
         switch (v.getId()) {
                 case R.id.Layout_Principal:
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
