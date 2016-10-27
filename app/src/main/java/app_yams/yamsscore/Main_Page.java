@@ -1,7 +1,10 @@
 package app_yams.yamsscore;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -14,7 +17,7 @@ import android.widget.RelativeLayout;
 
 public class Main_Page extends AppCompatActivity {
 
-    private float scale ;
+    private float scale = 1.0f ;
     public ScaleGestureDetector SGD;
     public ImageView ImageGrille;
     public FrameLayout Layout_Principal;
@@ -92,6 +95,15 @@ public class Main_Page extends AppCompatActivity {
     public boolean onTouch(View v, MotionEvent event) {
 
 
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        float x,y;
+
+        ImageGrille = (ImageView) findViewById(R.id.imageView);
+
           SGD.onTouchEvent(event);
 
 
@@ -117,17 +129,42 @@ public class Main_Page extends AppCompatActivity {
 
                         if(isthefirstpointer == true) {
 
+                            x = Layout_Principal.getX();
+                            y = Layout_Principal.getY();
+
+                        if(event.getX(0) + dX >  -(scale * 250)){
+
+                           if(event.getX(0) + dX < (width/10 + (scale*250))) {
 
 
+                               Log.i("system.out", "test =" + scale );
 
+                                x = event.getX(0) + dX;
+                            }
+
+
+                        }
+
+                            if(event.getY(0) + dY >  -(scale*250)){
+
+                               if(event.getY(0) + dY < (height/10 + (scale*250))) {
+
+                                    y = event.getY(0) + dY;
+                                }
+
+                            }
 
                             Layout_Principal.animate()
-                                    .x(event.getX(0) + dX)
-                                    .y(event.getY(0) + dY)
+                                    .x(x)
+                                    .y(y)
                                     .setDuration(0)
                                     .start();
 
-                        }
+
+                            }
+
+
+
                         return true;
                     } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
 
@@ -154,7 +191,7 @@ public class Main_Page extends AppCompatActivity {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             scale *= detector.getScaleFactor() ;
-            scale = Math.max(0.95f, Math.min(scale, 5.0f));
+            scale = Math.max(1.0f, Math.min(scale, 3.0f));
 
             Layout_Principal.setScaleX(scale);
             Layout_Principal.setScaleY(scale);
